@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUKANDA gopay | Enviar Comprovativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], longhaul: ['Montserrat', 'sans-serif'] },
+                    colors: { mgpblue: '#006699', mgpgreen: '#99cc33', mgpdark: '#004d73' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8fafc] flex flex-col items-center justify-center min-h-screen font-sans p-4">
+
+    <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-[0_4px_20px_-5px_rgba(0,102,153,0.15)] w-full max-w-md border border-gray-100 my-8">
+        
+        <div class="text-center mb-8">
+            <img src="logo_png.png" alt="MUKANDA gopay" class="h-24 w-auto object-contain mx-auto mb-6" onerror="this.src='https://via.placeholder.com/200?text=MUKANDA+gopay'">
+            <h2 class="font-bold tracking-tight text-xl text-mgpblue">
+            </h2>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Validação de Pagamento</p>
+        </div>
+
+        <form id="formUpload" class="space-y-5">
+            
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase ml-1 tracking-wider">Nome do Pagador</label>
+                <input type="text" id="nome_pagador" placeholder="Teu nome completo" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-mgpblue/30 outline-none font-bold text-gray-800 transition-all" required>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase ml-1 tracking-wider">E-mail</label>
+                <input type="email" id="email_pagador" placeholder="teu.email@exemplo.com" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-mgpblue/30 outline-none font-bold text-gray-800 transition-all" required>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase ml-1 tracking-wider">Nº de WhatsApp</label>
+                <div class="flex">
+                    <span class="inline-flex items-center px-4 bg-gray-100 border border-r-0 border-gray-200 text-gray-500 rounded-l-2xl font-black text-sm">
+                        +244
+                    </span>
+                    <input type="tel" id="whatsapp_pagador" placeholder="9XX XXX XXX" pattern="[0-9]{9}" maxlength="9" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-none rounded-r-2xl focus:ring-2 focus:ring-mgpblue/30 outline-none font-bold text-gray-800 transition-all" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase ml-1 tracking-wider">Código da Fatura (MKD)</label>
+                <input type="text" id="codigo_mkd" placeholder="MKD-0000" class="w-full p-4 bg-mgpblue/5 border border-mgpblue/20 rounded-2xl focus:ring-2 focus:ring-mgpblue/50 outline-none font-black text-mgpblue text-center uppercase transition-all" required>
+            </div>
+
+            <div class="pt-2">
+                <label class="block text-[10px] font-bold text-gray-500 mb-2 uppercase ml-1 tracking-wider text-center">Anexar Comprovativo Bancário</label>
+                
+                <div class="relative border-2 border-dashed border-gray-300 rounded-2xl p-6 hover:border-mgpblue hover:bg-blue-50 transition-all cursor-pointer text-center group">
+                    <input type="file" id="ficheiro" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*,.pdf" required>
+                    
+                    <svg class="mx-auto h-8 w-8 text-gray-400 group-hover:text-mgpblue mb-2 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <p class="text-xs font-bold text-gray-600 group-hover:text-mgpblue transition-colors" id="nomeFicheiro">Toca para escolher o PDF ou Imagem</p>
+                    <p class="text-[10px] text-gray-400 mt-1">Máximo 5MB</p>
+                </div>
+            </div>
+
+            <button type="submit" id="btnEnviar" class="w-full bg-mgpgreen text-mgpdark p-4 rounded-2xl font-black hover:opacity-90 transition-all shadow-lg shadow-mgpgreen/30 uppercase tracking-widest text-xs mt-4">
+                ENVIAR COMPROVATIVO
+            </button>
+        </form>
+        
+        <p class="text-center text-[9px] text-gray-400 mt-6 uppercase font-bold tracking-widest">Protegido por MUKANDA gopay © 2026</p>
+    </div>
+
+    <script>
+        document.getElementById('ficheiro').addEventListener('change', function(e) {
+            let fileName = e.target.files[0] ? e.target.files[0].name : "Toca para escolher o PDF ou Imagem";
+            const textoFicheiro = document.getElementById('nomeFicheiro');
+            textoFicheiro.innerText = fileName;
+            
+            if(e.target.files[0]) {
+                textoFicheiro.classList.add('text-mgpblue');
+                textoFicheiro.classList.remove('text-gray-600');
+            }
+        });
+
+        // Script temporário para evitar recarregamento durante o design
+        document.getElementById('formUpload').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnviar');
+            btn.innerText = "A ENVIAR...";
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            
+            // Aqui entra a tua lógica de ligação ao Make.com
+            setTimeout(() => {
+                alert("Simulação: Comprovativo enviado com sucesso!");
+                btn.innerText = "ENVIAR COMPROVATIVO";
+                btn.disabled = false;
+                btn.classList.remove('opacity-50');
+                this.reset();
+                document.getElementById('nomeFicheiro').innerText = "Toca para escolher o PDF ou Imagem";
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
